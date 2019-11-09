@@ -1,3 +1,4 @@
+using LibToyBot.Exceptions;
 using Shouldly;
 using Xunit;
 
@@ -13,7 +14,7 @@ namespace LibToyBot.Test
 
         }
 
-        [Fact] //TODO: Add a theory with a wider range of axis variation
+        [Fact]
         public void TestSceneProperties()
         {
             const int axis = 5;
@@ -21,6 +22,34 @@ namespace LibToyBot.Test
 
             fiveByFiveScene.HorizontalAxis.ShouldBe(axis);
             fiveByFiveScene.VerticalAxis.ShouldBe(axis);
+        }
+
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(-1, -1)]
+        [InlineData(5, 5)]
+        [InlineData(-15, -15)]
+        [InlineData(int.MaxValue, int.MaxValue)]
+        public void TestValidSceneDimensions(int xAxis, int yAxis)
+        {
+            Should.NotThrow(() => {
+                new Scene(xAxis, yAxis);
+            });
+        }
+
+
+        [Theory]
+        [InlineData(1, -1)]
+        [InlineData(-2, 5)]
+        [InlineData(0, 0)]
+        [InlineData(1, 0)]
+        [InlineData(0, 1)]
+        public void TestInvalidSceneDimensions(int xAxis, int yAxis)
+        {
+            Should.Throw<InvalidSceneRangeException>(() => {
+                new Scene(xAxis, yAxis);
+            });
+
         }
 
     }
