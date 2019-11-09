@@ -20,4 +20,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LibToyBot\LibToyBot.csproj" />
+  </ItemGroup>
+
 </Project>
