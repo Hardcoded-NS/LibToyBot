@@ -1,5 +1,4 @@
-﻿using System;
-using LibToyBot.Exceptions;
+﻿using LibToyBot.Exceptions;
 
 namespace LibToyBot
 {
@@ -23,8 +22,8 @@ namespace LibToyBot
         /// </para>
         /// <para>
         ///  A Scene is a grid bounded by the specified X &amp; Y axis maxima.
-        ///  The X and Y axis should exist in the same plane; that is, if X is positive, then Y should also be positive.
-        ///  Negative axis are valid.
+        ///  The X and Y axis should both be positive values, and greater than zero
+        ///  Negative axis are not valid.
         /// </para>
         /// </summary>
         /// <param name="xAxis">The size of the x axis</param>
@@ -46,10 +45,8 @@ namespace LibToyBot
 
         private static bool IsSceneValid(int xAxis, int yAxis)
         {
-            // if x is positive, then y should also be positive
-            // if x is negative, then y should also be negative
-            return xAxis > 0 && yAxis > 0 || // both x & y are positive
-                   xAxis < 0 && yAxis < 0; // both x & y are negative
+            // both x & y axis maxima should be positive and greater than zero
+            return xAxis > 0 && yAxis > 0;
         }
     }
 }
