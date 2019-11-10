@@ -11,7 +11,6 @@ namespace LibToyBot.Test
         {
             var emptyScene = new Scene();
             emptyScene.ShouldNotBeNull();
-
         }
 
         [Fact]
@@ -26,9 +25,7 @@ namespace LibToyBot.Test
 
         [Theory]
         [InlineData(1, 1)]
-        [InlineData(-1, -1)]
         [InlineData(5, 5)]
-        [InlineData(-15, -15)]
         [InlineData(int.MaxValue, int.MaxValue)]
         public void TestValidSceneDimensions(int xAxis, int yAxis)
         {
@@ -44,12 +41,12 @@ namespace LibToyBot.Test
         [InlineData(0, 0)]
         [InlineData(1, 0)]
         [InlineData(0, 1)]
+        [InlineData(-1, -1)]
         public void TestInvalidSceneDimensions(int xAxis, int yAxis)
         {
             Should.Throw<InvalidSceneRangeException>(() => {
                 new Scene(xAxis, yAxis);
             });
-
         }
 
     }
