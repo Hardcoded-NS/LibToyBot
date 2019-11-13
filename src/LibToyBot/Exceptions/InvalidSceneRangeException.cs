@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LibToyBot.Exceptions
 {
-    public class InvalidSceneRangeException : Exception
+    public class InvalidTableRangeException : Exception
     {
-        public InvalidSceneRangeException(string message) : base(message)
+        public InvalidTableRangeException(string message) : base(message)
         {
         }
     }

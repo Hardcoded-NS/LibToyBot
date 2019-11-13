@@ -4,33 +4,33 @@ using Xunit;
 
 namespace LibToyBot.Test
 {
-    public class SceneTest
+    public class TableTest
     {
         [Fact]
-        public void TestSceneConstructor()
+        public void TestTableConstructor()
         {
-            var emptyScene = new Scene();
-            emptyScene.ShouldNotBeNull();
+            var defaultTable = new Table();
+            defaultTable.ShouldNotBeNull();
         }
 
         [Fact]
-        public void TestSceneProperties()
+        public void TestTableProperties()
         {
             const int axis = 5;
-            var fiveByFiveScene = new Scene(axis, axis);
+            var fiveByFiveTable = new Table(axis, axis);
 
-            fiveByFiveScene.HorizontalAxis.ShouldBe(axis);
-            fiveByFiveScene.VerticalAxis.ShouldBe(axis);
+            fiveByFiveTable.HorizontalAxis.ShouldBe(axis);
+            fiveByFiveTable.VerticalAxis.ShouldBe(axis);
         }
 
         [Theory]
         [InlineData(1, 1)]
         [InlineData(5, 5)]
         [InlineData(int.MaxValue, int.MaxValue)]
-        public void TestValidSceneDimensions(int xAxis, int yAxis)
+        public void TestValidTableDimensions(int xAxis, int yAxis)
         {
             Should.NotThrow(() => {
-                new Scene(xAxis, yAxis);
+                new Table(xAxis, yAxis);
             });
         }
 
@@ -42,10 +42,10 @@ namespace LibToyBot.Test
         [InlineData(1, 0)]
         [InlineData(0, 1)]
         [InlineData(-1, -1)]
-        public void TestInvalidSceneDimensions(int xAxis, int yAxis)
+        public void TestInvalidTableDimensions(int xAxis, int yAxis)
         {
-            Should.Throw<InvalidSceneRangeException>(() => {
-                new Scene(xAxis, yAxis);
+            Should.Throw<InvalidTableRangeException>(() => {
+                new Table(xAxis, yAxis);
             });
         }
 
