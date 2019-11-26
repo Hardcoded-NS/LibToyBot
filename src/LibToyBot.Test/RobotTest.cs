@@ -21,6 +21,7 @@ namespace LibToyBot.Test
             moveOutcome.Success.ShouldBeTrue();
         }
 
+
         [Fact]
         public void TestRobotMove()
         {
