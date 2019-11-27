@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Input;
 using LibToyBot.Commands;
 using Shouldly;
 using Xunit;
