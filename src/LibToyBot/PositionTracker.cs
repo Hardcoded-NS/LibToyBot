@@ -1,6 +1,6 @@
 ﻿namespace LibToyBot
 {
-    internal class PositionTracker
+    internal class PositionTracker : IPositionTracker
     {
 
         private int currentX;

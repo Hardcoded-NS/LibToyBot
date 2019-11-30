@@ -1,4 +1,6 @@
-﻿namespace LibToyBot
+﻿using LibToyBot.Outcomes;
+
+namespace LibToyBot
 {
     /// <summary>A Robot that can move around a scene.</summary>
     public class Robot
@@ -17,7 +19,7 @@
             
             return new ActionOutcome
             {
-                Success = true
+                Result = OutomeStatus.Success
             };
         }
     }
