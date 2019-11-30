@@ -1,4 +1,5 @@
-﻿using Shouldly;
+﻿using LibToyBot.Outcomes;
+using Shouldly;
 using Xunit;
 
 namespace LibToyBot.Test
@@ -18,7 +19,7 @@ namespace LibToyBot.Test
             var robot = new Robot();
             var moveOutcome = robot.Action("PLACE X,Y,DIRECTION");
             moveOutcome.ShouldNotBeNull();
-            moveOutcome.Success.ShouldBeTrue();
+            moveOutcome.Result.ShouldBe(OutomeStatus.Success);
         }
 
 
@@ -28,7 +29,7 @@ namespace LibToyBot.Test
             var robot = new Robot();
             var moveOutcome = robot.Action("MOVE");
             moveOutcome.ShouldNotBeNull();
-            moveOutcome.Success.ShouldBeTrue();
+            moveOutcome.Result.ShouldBe(OutomeStatus.Success);
         }
     }
 

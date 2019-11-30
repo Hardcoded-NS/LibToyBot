@@ -1,8 +1,8 @@
-﻿namespace LibToyBot
+﻿namespace LibToyBot.Outcomes
 {
     public interface IOutcome
     {
-        bool Success { get; set; }
-        string Result { get; set; }
+        OutomeStatus Result { get; set; }
+        string Message { get; set; }
     }
 }
