@@ -43,9 +43,9 @@ namespace LibToyBot.Test
 
         [Theory]
         [ClassData(typeof(MovementProcessorSuccessTestData))]
-        public void TestSuccessfulMove(int x, int y, Orientation orientation)
+        public void TestSuccessfulMove(int xCoordinate, int yCoordinate, Orientation orientation)
         {
-            positionTracker.SetPosition(x, y);
+            positionTracker.SetPosition(xCoordinate, yCoordinate);
             positionTracker.SetOrientation(orientation);
             MoveOutcome outcome = movementProcessor.Move();
             outcome.Result.ShouldBe(OutomeStatus.Success);
@@ -53,9 +53,9 @@ namespace LibToyBot.Test
 
         [Theory]
         [ClassData(typeof(MovementProcessorBoundaryTestData))]
-        public void TestFailedEdgeMove(int x, int y, Orientation orientation)
+        public void TestFailedEdgeMove(int xCoordinate, int yCoordinate, Orientation orientation)
         {
-            positionTracker.SetPosition(x, y);
+            positionTracker.SetPosition(xCoordinate, yCoordinate);
             positionTracker.SetOrientation(orientation);
             MoveOutcome outcome = movementProcessor.Move();
             outcome.Result.ShouldBe(OutomeStatus.Fail);
