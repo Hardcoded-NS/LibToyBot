@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>Aaron White</Authors>
+    <Company />
+    <Product>LibToyBot</Product>
+    <Description>Toy bot library</Description>
   </PropertyGroup>
 
 </Project>
