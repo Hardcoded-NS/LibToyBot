@@ -1,20 +1,63 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+
+name: $(Version.Major).$(Version.Minor)$(rev:.r)
 
 trigger:
 - master
+- develop
+
+variables:
+  Version: $(Build.BuildNumber)-preview
+  BuildConfiguration: Release
 
 pool:
-  vmImage: 'ubuntu-latest'
-  
+  name: Hosted Windows 2019 with VS2019
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+    restoreDirectory: '$(Pipeline.Workspace)\nuget'
+
+
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: 'src/LibToyBot.Test/LibToyBot.Test.csproj'
+    arguments: '--configuration $(BuildConfiguration)'
+  enabled: true
+
+- task: DotNetCoreCLI@2
+  condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
+  displayName: Pack 
+  inputs:
+    command: pack    
+    packagesToPack: '**/LibToyBot.csproj'
+    versioningScheme: byBuildNumber    
+    arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+  displayName: Pack (Preview)  
+  inputs:
+    command: pack    
+    packagesToPack: '**/LibToyBot.csproj'
+    versioningScheme: byEnvVar
+    versionEnvVar: Version     
+    arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2  
+  displayName: 'Push NuGet' 
+  condition: and(succeeded(), or( eq(variables['Build.SourceBranchName'], 'develop'), eq(variables['Build.SourceBranchName'], 'master') ), false) #disabled
+  inputs:
+    command: push    
+    publishVstsFeed: '/9549f135-9aeb-42aa-9fe5-b09a7b7c41ea'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+  condition: succeeded()
