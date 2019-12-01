@@ -47,8 +47,8 @@ namespace LibToyBot.Test
         {
             positionTracker.SetPosition(xCoordinate, yCoordinate);
             positionTracker.SetOrientation(orientation);
-            MoveOutcome outcome = movementProcessor.Move();
-            outcome.Result.ShouldBe(OutomeStatus.Success);
+            var outcome = movementProcessor.Move();
+            outcome.Result.ShouldBe(OutcomeStatus.Success);
         }
 
         [Theory]
@@ -57,8 +57,8 @@ namespace LibToyBot.Test
         {
             positionTracker.SetPosition(xCoordinate, yCoordinate);
             positionTracker.SetOrientation(orientation);
-            MoveOutcome outcome = movementProcessor.Move();
-            outcome.Result.ShouldBe(OutomeStatus.Fail);
+            var outcome = movementProcessor.Move();
+            outcome.Result.ShouldBe(OutcomeStatus.Fail);
         }
 
     }

@@ -1,4 +1,4 @@
 ﻿namespace LibToyBot.Outcomes
 {
-    public enum OutomeStatus { Success, Fail }
+    public enum OutcomeStatus { Success, Fail }
 }

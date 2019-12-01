@@ -8,17 +8,17 @@ namespace LibToyBot.Test
  
     public class CmdParserTest
     {
-        internal CmdParser Parser { get; set; }
+        internal CommandParser Parser { get; set; }
 
         public CmdParserTest()
         {
-            Parser = new CmdParser();
+            Parser = new CommandParser();
         }
 
         [Fact]
         public void TestCmdParserConstructor()
         {
-            var parser = new CmdParser();
+            var parser = new CommandParser();
             parser.ShouldNotBeNull();
         }
 

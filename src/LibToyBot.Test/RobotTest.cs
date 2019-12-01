@@ -6,20 +6,21 @@ namespace LibToyBot.Test
 {
     public class RobotTest
     {
+        private readonly Robot _robot;
 
-        [Fact]
-        public void TestRobotConstructor()
+        public RobotTest()
         {
-            var robot = new Robot();
+            _robot = new Robot();
         }
 
         [Fact]
         public void TestRobotPlace()
         {
-            var robot = new Robot();
-            var moveOutcome = robot.Action("PLACE X,Y,DIRECTION");
+            var moveOutcome = _robot.Action("PLACE 1,2,NORTH");
             moveOutcome.ShouldNotBeNull();
-            moveOutcome.Result.ShouldBe(OutomeStatus.Success);
+            moveOutcome.Result.ShouldBe(OutcomeStatus.Success);
+//            var positionReport = _robot.Action("REPORT");
+//            positionReport.ShouldBeOfType<ReportOutcome>();
         }
 
 
@@ -29,7 +30,7 @@ namespace LibToyBot.Test
             var robot = new Robot();
             var moveOutcome = robot.Action("MOVE");
             moveOutcome.ShouldNotBeNull();
-            moveOutcome.Result.ShouldBe(OutomeStatus.Success);
+            moveOutcome.Result.ShouldBe(OutcomeStatus.Success);
         }
     }
 
