@@ -6,17 +6,22 @@ namespace LibToyBot
     /// <summary>A Robot that can move around a scene.</summary>
     public class Robot
     {
-        private readonly ICommandParser _commandParser;
+        private readonly ICommandExecutor _commandExecutor;
         private readonly IPositionReporter _positionReporter;
+        private readonly IMovementProcessor _movementProcessor;
+        private readonly IPositionTracker _positionTracker;
 
         //TODO: Look at dependency injection for all dependent services ?
         //That would require these internal components to be public
         public Robot()
         {
+            //Perhaps static class + Initialise method? 
             //TODO: move position reporter to Command Executor?
-
-            _commandParser = new CommandParser();
-            _positionReporter = new PositionReporter(new PositionTracker());
+            //TODO: Move all this construction outside of Robot?
+            _positionTracker = new PositionTracker();
+            _movementProcessor = new MovementProcessor(new BoundsEvaluator(new Table()), _positionTracker );
+            _commandExecutor = new CommandExecutor(_movementProcessor);
+            _positionReporter = new PositionReporter(_positionTracker);
         }
 
 
@@ -31,10 +36,10 @@ namespace LibToyBot
         public IOutcome Action(string action)
         {
             //Get the requested command
-            var command = _commandParser.Process(action);
+            var command = _commandExecutor.ExecuteCommand(action);
 
             //Execute the command
-            command.Execute();//There's currently no way to get the success/fail status of a command
+            //command.Execute();//There's currently no way to get the success/fail status of a command
 
 
             //This smells a bit funny. We're returning an action outcome without any way of knowing what the status of the command was.

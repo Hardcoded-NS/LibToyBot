@@ -1,11 +1,12 @@
 ﻿using LibToyBot.Commands;
+using LibToyBot.Outcomes;
 
 namespace LibToyBot
 {
-    internal interface ICommandParser
+    internal interface ICommandExecutor
     {
         /// <summary>
-        ///   <para>Parse strings that contain commands. Returns an ICommand instance of the corresponding command</para>
+        ///   <para>Parse and execute strings that contain commands</para>
         ///   <para>Available commands are:</para>
         ///   <para>PLACE X,Y,DIRECTION
         ///   MOVE
@@ -14,6 +15,6 @@ namespace LibToyBot
         ///   REPORT
         ///   </para> 
         /// </summary>
-        ICommand Process(string commandText);
+        IOutcome ExecuteCommand(string commandText);
     }
 }
