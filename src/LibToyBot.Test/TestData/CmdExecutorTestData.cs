@@ -4,7 +4,7 @@ using LibToyBot.Commands;
 
 namespace LibToyBot.Test.TestData
 {
-//    internal class CmdExecutorTestData : IEnumerable<object[]>
+//    internal class CommandExecutorTestData : IEnumerable<object[]>
 //    {
 //        public IEnumerator<object[]> GetEnumerator()
 //        {

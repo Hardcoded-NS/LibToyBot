@@ -33,9 +33,9 @@
 
     public enum Orientation //would prefer this to be internal, but the xUnit test methods require public access
     {
-        North,
-        South,
-        East,
-        West
+        NORTH,
+        SOUTH,
+        EAST,
+        WEST
     }
 }

@@ -1,20 +1,15 @@
-﻿using System;
-using LibToyBot.Commands;
-using Shouldly;
-using Xunit;
-
-namespace LibToyBot.Test
+﻿namespace LibToyBot.Test
 {
  
     public class CommandExecutorTest
     {
-        internal CommandExecutor Executor { get; set; }
+        internal CommandExecutor executor { get; set; }
 
         public CommandExecutorTest()
         {
             //TODO: figure out these nested dependencies
             //TODO: Mock these dependencies
-            Executor = new CommandExecutor(new MovementProcessor(new BoundsEvaluator(new Table()), new PositionTracker()));
+            executor = new CommandExecutor(new MovementProcessor(new BoundsEvaluator(new Table()), new PositionTracker()));
         }
         
 //        [Theory]
@@ -29,6 +24,11 @@ namespace LibToyBot.Test
 //            command.ShouldNotBeNull();
 //            command.ShouldBeOfType(expectedType);
 
+//        }
+
+//        public void TestExecute()
+//        {
+//            executor.ExecuteCommand()
 //        }
     }
 }

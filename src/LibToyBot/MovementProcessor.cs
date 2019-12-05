@@ -17,10 +17,10 @@ namespace LibToyBot
 
             movementMap = new Dictionary<Orientation, (int xModifier, int yModifier)>
             {
-                {Orientation.North, (0, 1)},
-                {Orientation.South, (0, -1)},
-                {Orientation.East, (1, 0)},
-                {Orientation.West, (-1, 0)}
+                {Orientation.NORTH, (0, 1)},
+                {Orientation.SOUTH, (0, -1)},
+                {Orientation.EAST, (1, 0)},
+                {Orientation.WEST, (-1, 0)}
             };
         }
 

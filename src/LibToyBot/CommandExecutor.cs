@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LibToyBot.Commands;
 using LibToyBot.Outcomes;
@@ -9,11 +10,14 @@ namespace LibToyBot
     internal class CommandExecutor : ICommandExecutor
     {
         private readonly IMovementProcessor _movementProcessor;
+        private readonly Stack<Call> _callStack;
 
         public CommandExecutor(IMovementProcessor movementProcessor)
         {
             _movementProcessor = movementProcessor;
+            _callStack = new Stack<Call>();
         }
+
         /// <summary>
         ///   <para>Parse and execute strings that contain commands. Returns an ICommand instance of the corresponding command</para>
         ///   <para>Available commands are:</para>
@@ -26,8 +30,6 @@ namespace LibToyBot
         /// </summary>
         public IOutcome ExecuteCommand(string commandText)
         {
-            //TODO: this needs a Call Stack that is passed to the Command.
-            // Command puts it's outcome on the call stack 
             // TODO: sanitise input
 
             // tokenize the command string on whitespace
@@ -35,18 +37,21 @@ namespace LibToyBot
 
             // switch over the first token
             var firstToken = cmdTokens.FirstOrDefault();
-            Enum.TryParse<RobotCommand>(firstToken, out var commandEnum);// let the switch expression deal with throwing exceptions
+            Enum.TryParse<RobotCommand>(firstToken, out var commandEnum);
+
+            //TODO: Move this to a .NET Core class library
+            // introduce DI 
+            // add CommandMap to map RobotCommands to instances of ICommand
             ICommand command = commandEnum switch
             {
-                //TODO: This design is wrong.
-                //Suggest implementing CommandExecutor and passing MovementProcessor as argument to Execute()
-                RobotCommand.PLACE => new PlaceCommand(cmdTokens, _movementProcessor),
-                RobotCommand.MOVE => new MoveCommand(_movementProcessor),
-                RobotCommand.LEFT => new TurnCommand(cmdTokens, _movementProcessor),
-                RobotCommand.RIGHT => new TurnCommand(cmdTokens, _movementProcessor),
-                RobotCommand.REPORT => new ReportCommand(),
+                RobotCommand.PLACE => new PlaceCommand(cmdTokens, _callStack, _movementProcessor),
+                RobotCommand.MOVE => new MoveCommand(_callStack, _movementProcessor),
+                RobotCommand.LEFT => new TurnCommand(_callStack, cmdTokens, _movementProcessor),
+                RobotCommand.RIGHT => new TurnCommand(_callStack, cmdTokens, _movementProcessor),
+                RobotCommand.REPORT => new ReportCommand(_callStack),
                 _ => throw new ArgumentOutOfRangeException()
             };
+
             command.Execute();
             //TODO: Get 
             return null;

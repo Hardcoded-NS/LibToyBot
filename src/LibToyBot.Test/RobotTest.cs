@@ -19,8 +19,8 @@ namespace LibToyBot.Test
             var moveOutcome = _robot.Action("PLACE 1,2,NORTH");
             moveOutcome.ShouldNotBeNull();
             moveOutcome.Result.ShouldBe(OutcomeStatus.Success);
-//            var positionReport = _robot.Action("REPORT");
-//            positionReport.ShouldBeOfType<ReportOutcome>();
+            var positionReport = _robot.Action("REPORT");
+            positionReport.ShouldBeOfType<ReportOutcome>();
         }
 
 

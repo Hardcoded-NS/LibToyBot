@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace LibToyBot.Commands
 {
@@ -6,7 +7,7 @@ namespace LibToyBot.Commands
     {
         private readonly IMovementProcessor _movementProcessor;
 
-        public MoveCommand(IMovementProcessor movementProcessor)
+        public MoveCommand(Stack<Call> callStack, IMovementProcessor movementProcessor)
         {
             _movementProcessor = movementProcessor;
         }
