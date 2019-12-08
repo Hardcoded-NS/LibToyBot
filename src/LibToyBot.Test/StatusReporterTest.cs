@@ -1,4 +1,5 @@
-﻿using LibToyBot.Test.TestData;
+﻿using LibToyBot.Reporting;
+using LibToyBot.Test.TestData;
 using Shouldly;
 using Xunit;
 

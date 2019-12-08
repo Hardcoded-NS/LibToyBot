@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using LibToyBot.Commands;
 
-namespace LibToyBot.Commands
+namespace LibToyBot.Reporting
 {
     internal class ReportCommand : ICommand
     {

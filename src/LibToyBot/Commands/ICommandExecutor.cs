@@ -1,7 +1,6 @@
-﻿using LibToyBot.Commands;
-using LibToyBot.Outcomes;
+﻿using LibToyBot.Outcomes;
 
-namespace LibToyBot
+namespace LibToyBot.Commands
 {
     public interface ICommandExecutor
     {

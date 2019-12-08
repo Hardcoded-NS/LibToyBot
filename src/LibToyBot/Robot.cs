@@ -1,5 +1,8 @@
 ﻿using System;
+using LibToyBot.Commands;
+using LibToyBot.Movement;
 using LibToyBot.Outcomes;
+using LibToyBot.Reporting;
 
 namespace LibToyBot
 {

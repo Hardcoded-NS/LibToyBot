@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using LibToyBot.Commands;
 
-namespace LibToyBot.Commands
+namespace LibToyBot.Movement
 {
     internal class MoveCommand : ICommand
     {

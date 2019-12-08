@@ -1,10 +1,5 @@
-﻿namespace LibToyBot
+﻿namespace LibToyBot.Reporting
 {
-    public interface IPositionReporter
-    {
-        PositionReport Report();
-    }
-
     internal class PositionReporter : IPositionReporter
     {
         private readonly IPositionTracker _positionTracker;

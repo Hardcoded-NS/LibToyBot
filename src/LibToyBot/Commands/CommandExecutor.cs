@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using LibToyBot.Commands;
+using LibToyBot.Movement;
 using LibToyBot.Outcomes;
+using LibToyBot.Reporting;
 
 namespace LibToyBot
 {
