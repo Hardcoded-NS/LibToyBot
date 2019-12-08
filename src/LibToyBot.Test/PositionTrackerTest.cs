@@ -1,15 +1,17 @@
-﻿using Shouldly;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Shouldly;
 using Xunit;
 
 namespace LibToyBot.Test
 {
-    public class PositionTrackerTest
+    public class PositionTrackerTest : TestBase
     {
-        private readonly PositionTracker positionTracker;
+        private readonly IPositionTracker positionTracker;
 
         public PositionTrackerTest()
         {
-            positionTracker = new PositionTracker();
+            BuildServices();
+            positionTracker = serviceProvider.GetService<IPositionTracker>();
         }
 
         [Theory]

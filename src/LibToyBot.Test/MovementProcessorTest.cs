@@ -1,6 +1,7 @@
 ﻿using LibToyBot.Movement;
 using LibToyBot.Outcomes;
 using LibToyBot.Test.TestData;
+using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 using Xunit;
 
@@ -27,18 +28,16 @@ namespace LibToyBot.Test
         0,0                 S
 
     */
-    public class MovementProcessorTest
+    public class MovementProcessorTest : TestBase
     {
-        private readonly MovementProcessor movementProcessor;
-        private readonly BoundsEvaluator boundsEvaluator;
-        private readonly PositionTracker positionTracker;
+        private readonly IMovementProcessor movementProcessor;
+        private readonly IPositionTracker positionTracker;
 
         public MovementProcessorTest()
         {
-            //TODO: dependency injection?
-            boundsEvaluator = new BoundsEvaluator(new Table());
-            positionTracker = new PositionTracker();
-            movementProcessor = new MovementProcessor(boundsEvaluator, positionTracker);
+            BuildServices();
+            movementProcessor = serviceProvider.GetService<IMovementProcessor>();
+            positionTracker = serviceProvider.GetService<IPositionTracker>();
         }
 
 
