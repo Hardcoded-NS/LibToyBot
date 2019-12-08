@@ -15,7 +15,7 @@ namespace LibToyBot.Movement
         
         public void Execute(string[] cmdTokens = default)
         {
-            throw new NotImplementedException();
+            _movementProcessor.Move();
         }
     }
 }

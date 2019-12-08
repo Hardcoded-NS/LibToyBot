@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LibToyBot.Commands;
 
 namespace LibToyBot.Movement
@@ -15,7 +16,10 @@ namespace LibToyBot.Movement
 
         public void Execute(string[] cmdTokens = default)
         {
-            throw new NotImplementedException();
+            //single element with the direction to turn
+            var direction = cmdTokens?.FirstOrDefault();
+            //TODO: validate direction
+            _movementProcessor.Turn(direction);
         }
     }
 }

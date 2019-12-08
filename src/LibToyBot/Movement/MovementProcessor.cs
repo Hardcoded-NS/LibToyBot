@@ -49,6 +49,12 @@ namespace LibToyBot.Movement
             return new ActionOutcome(OutcomeStatus.Success, $"The robot has moved to position {projectedX}, {projectedY}");
         }
 
+        public ActionOutcome Turn(string direction)
+        {
+            //TODO: A linked list of orientations, to keep track of the direction the robot is facing
+            return new ActionOutcome(OutcomeStatus.Success); //stub
+        }
+
         public ActionOutcome Place(in int xPosition, in int yPosition, Orientation orientation)
         {
             // determine if projected position is still in bounds
