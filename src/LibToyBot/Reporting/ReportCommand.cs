@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using LibToyBot.Commands;
 
 namespace LibToyBot.Reporting
 {
     internal class ReportCommand : ICommand
     {
-        public ReportCommand(Stack<Call> callStack)
+        private readonly Stack<Call> _callStack;
+        private readonly IPositionReporter _positionReporter;
+
+        public ReportCommand(Stack<Call> callStack, IPositionReporter positionReporter)
         {
-            throw new NotImplementedException();
+            _callStack = callStack;
+            _positionReporter = positionReporter;
         }
 
-        public void Execute()
+        public void Execute(string[] cmdTokens = default)
         {
-            throw new NotImplementedException();
+            var postionReport = _positionReporter.Report();
         }
     }
 }

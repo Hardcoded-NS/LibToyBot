@@ -1,36 +1,62 @@
-﻿using LibToyBot.Movement;
+﻿using LibToyBot.Commands;
+using LibToyBot.Movement;
+using LibToyBot.Reporting;
+using Microsoft.Extensions.DependencyInjection;
+using NSubstitute;
+using Xunit;
 
 namespace LibToyBot.Test
 {
  
-    public class CommandExecutorTest
+    public class CommandExecutorTest : TestBase
     {
-        internal CommandExecutor executor { get; set; }
+        private readonly ICommandExecutor _executor;
+        private readonly IMovementProcessor _mockMovementProcessor;
+        private readonly IPositionReporter _mockPositionReporter;
 
         public CommandExecutorTest()
         {
-            //TODO: figure out these nested dependencies
-            //TODO: Mock these dependencies
-            executor = new CommandExecutor(new MovementProcessor(new BoundsEvaluator(new Table()), new PositionTracker()));
+            _mockMovementProcessor = SubstituteFor<IMovementProcessor>();
+            _mockPositionReporter = SubstituteFor<IPositionReporter>();
+            BuildServices();
+            _executor = serviceProvider.GetService<ICommandExecutor>(); 
         }
         
-//        [Theory]
-//        [InlineData("PLACE X,Y,DIRECTION", typeof(PlaceCommand))]
-//        [InlineData("MOVE", typeof(MoveCommand))]
-//        [InlineData("LEFT", typeof(TurnCommand))]
-//        [InlineData("RIGHT", typeof(TurnCommand))]
-//        [InlineData("REPORT", typeof(ReportCommand))]
-//        public void TestProcessReturnTypes(string commandText, Type expectedType)
-//        {
-//            ICommand command = Executor.ExecuteCommand(commandText);
-//            command.ShouldNotBeNull();
-//            command.ShouldBeOfType(expectedType);
+        [Theory]
+        [InlineData("PLACE 1,2,NORTH", 1, 2, Orientation.NORTH)]
+        [InlineData("PLACE 0,0,EAST", 0, 0, Orientation.EAST)]
+        [InlineData("PLACE 5,5,SOUTH", 5, 5, Orientation.SOUTH)]
+        [InlineData("PLACE 3,3,WEST", 3, 3, Orientation.WEST)]
+        public void TestPlaceCommand(string commandText, int xPos, int yPos, Orientation orientation)
+        {
+            _executor.ExecuteCommand(commandText);
+            _mockMovementProcessor.Received().Place(xPos, yPos, orientation);
+        }
 
-//        }
 
-//        public void TestExecute()
-//        {
-//            executor.ExecuteCommand()
-//        }
+        [Theory]
+        [InlineData("MOVE")]
+        public void TestMoveCommand(string commandText)
+        {
+            _executor.ExecuteCommand(commandText);
+            _mockMovementProcessor.Received().Move();
+        }
+
+        [Theory]
+        [InlineData("LEFT")]
+        [InlineData("RIGHT")]
+        public void TestTurnCommand(string commandText)
+        {
+            _executor.ExecuteCommand(commandText);
+            _mockMovementProcessor.Received().Turn(commandText);
+        }
+
+        [Theory]
+        [InlineData("REPORT")]
+        public void TestReportCommand(string commandText)
+        {
+            _executor.ExecuteCommand(commandText);
+            _mockPositionReporter.Received().Report();
+        }
     }
 }

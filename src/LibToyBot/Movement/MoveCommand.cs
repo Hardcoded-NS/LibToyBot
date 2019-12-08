@@ -12,10 +12,10 @@ namespace LibToyBot.Movement
         {
             _movementProcessor = movementProcessor;
         }
-
-        public void Execute()
+        
+        public void Execute(string[] cmdTokens = default)
         {
-            throw new NotImplementedException();
+            _movementProcessor.Move();
         }
     }
 }

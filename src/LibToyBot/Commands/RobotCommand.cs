@@ -1,4 +1,4 @@
-﻿namespace LibToyBot
+﻿namespace LibToyBot.Commands
 {
     internal enum RobotCommand
     {
