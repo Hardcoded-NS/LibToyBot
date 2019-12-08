@@ -6,12 +6,14 @@ namespace LibToyBot.Reporting
 {
     internal class ReportCommand : ICommand
     {
+        private readonly Stack<Call> _callStack;
+
         public ReportCommand(Stack<Call> callStack)
         {
-            throw new NotImplementedException();
+            _callStack = callStack;
         }
 
-        public void Execute()
+        public void Execute(string[] cmdTokens = default)
         {
             throw new NotImplementedException();
         }

@@ -6,16 +6,14 @@ namespace LibToyBot.Movement
 {
     internal class TurnCommand : ICommand
     {
-        private readonly string[] _cmdTokens;
         private readonly IMovementProcessor _movementProcessor;
 
-        public TurnCommand(Stack<Call> callStack, string[] cmdTokens, IMovementProcessor movementProcessor)
+        public TurnCommand(Stack<Call> callStack, IMovementProcessor movementProcessor)
         {
-            _cmdTokens = cmdTokens;
             _movementProcessor = movementProcessor;
         }
 
-        public void Execute()
+        public void Execute(string[] cmdTokens = default)
         {
             throw new NotImplementedException();
         }

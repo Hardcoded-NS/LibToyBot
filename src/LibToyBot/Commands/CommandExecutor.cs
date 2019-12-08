@@ -1,23 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using LibToyBot.Commands;
 using LibToyBot.Movement;
 using LibToyBot.Outcomes;
 using LibToyBot.Reporting;
 
-namespace LibToyBot
+namespace LibToyBot.Commands
 {
     /// <summary>A parser for processing string input and converting to a command</summary>
     internal class CommandExecutor : ICommandExecutor
     {
-        private readonly IMovementProcessor _movementProcessor;
         private readonly Stack<Call> _callStack;
+        private readonly PlaceCommand _placeCommand;
+        private readonly MoveCommand _moveCommand;
+        private readonly TurnCommand _turnCommand;
+        private readonly ReportCommand _reportCommand;
 
-        public CommandExecutor(IMovementProcessor movementProcessor)
+        public CommandExecutor(Stack<Call> callStack,
+            PlaceCommand placeCommand, 
+            MoveCommand moveCommand, 
+            TurnCommand turnCommand, 
+            ReportCommand reportCommand)
         {
-            _movementProcessor = movementProcessor;
-            _callStack = new Stack<Call>();
+            _callStack = callStack;
+            _placeCommand = placeCommand;
+            _moveCommand = moveCommand;
+            _turnCommand = turnCommand;
+            _reportCommand = reportCommand;
+
+
+//            _callStack = new Stack<Call>();
         }
 
         /// <summary>
@@ -32,7 +44,7 @@ namespace LibToyBot
         /// </summary>
         public IOutcome ExecuteCommand(string commandText)
         {
-            // TODO: sanitise input
+            // TODO: sanitise command input
 
             // tokenize the command string on whitespace
             var cmdTokens = commandText.Split(' ');
@@ -41,21 +53,18 @@ namespace LibToyBot
             var firstToken = cmdTokens.FirstOrDefault();
             Enum.TryParse<RobotCommand>(firstToken, out var commandEnum);
 
-            //TODO: Move this to a .NET Core class library
-            // introduce DI 
-            // add CommandMap to map RobotCommands to instances of ICommand
             ICommand command = commandEnum switch
             {
-                RobotCommand.PLACE => new PlaceCommand(cmdTokens, _callStack, _movementProcessor),
-                RobotCommand.MOVE => new MoveCommand(_callStack, _movementProcessor),
-                RobotCommand.LEFT => new TurnCommand(_callStack, cmdTokens, _movementProcessor),
-                RobotCommand.RIGHT => new TurnCommand(_callStack, cmdTokens, _movementProcessor),
-                RobotCommand.REPORT => new ReportCommand(_callStack),
+                RobotCommand.PLACE => _placeCommand,
+                RobotCommand.MOVE => _moveCommand,
+                RobotCommand.LEFT => _turnCommand,
+                RobotCommand.RIGHT => _turnCommand,
+                RobotCommand.REPORT => _reportCommand,
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            command.Execute();
-            //TODO: Get 
+            command.Execute(cmdTokens);
+            //TODO: Get outcome from call stack
             return null;
         }
     }
