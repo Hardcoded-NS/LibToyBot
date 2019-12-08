@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NSubstitute;
 
 namespace LibToyBot.Test
 {
@@ -23,6 +24,13 @@ namespace LibToyBot.Test
         internal void BuildServices()
         {
             serviceProvider = serviceCollection.BuildServiceProvider();
+        }
+
+        public T SubstituteFor<T>() where T : class
+        {
+            var mock = Substitute.For<T>();
+            serviceCollection.AddScoped<T>(provider => mock);
+            return mock;
         }
     }
 }
