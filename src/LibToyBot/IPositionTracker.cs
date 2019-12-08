@@ -1,6 +1,6 @@
 ﻿namespace LibToyBot
 {
-    internal interface IPositionTracker
+    public interface IPositionTracker
     {
         void SetPosition(int xCoordinate, int yCoordinate);
         (int xPosition, int yPosition) GetPosition();

@@ -3,7 +3,7 @@ using LibToyBot.Outcomes;
 
 namespace LibToyBot
 {
-    /// <summary>A Robot that can move around a scene.</summary>
+    /// <summary>A Robot that can move around a table.</summary>
     public class Robot
     {
         private readonly ICommandExecutor _commandExecutor;
@@ -13,15 +13,19 @@ namespace LibToyBot
 
         //TODO: Look at dependency injection for all dependent services ?
         //That would require these internal components to be public
-        public Robot()
+        public Robot(ICommandExecutor commandExecutor, IPositionReporter positionReporter, IMovementProcessor movementProcessor, IPositionTracker _positionTracker)
         {
+            _commandExecutor = commandExecutor;
+            _positionReporter = positionReporter;
+            _movementProcessor = movementProcessor;
+            this._positionTracker = _positionTracker;
             //Perhaps static class + Initialise method? 
             //TODO: move position reporter to Command Executor?
             //TODO: Move all this construction outside of Robot?
-            _positionTracker = new PositionTracker();
-            _movementProcessor = new MovementProcessor(new BoundsEvaluator(new Table()), _positionTracker );
-            _commandExecutor = new CommandExecutor(_movementProcessor);
-            _positionReporter = new PositionReporter(_positionTracker);
+//            _positionTracker = new PositionTracker();
+//            _movementProcessor = new MovementProcessor(new BoundsEvaluator(new Table()), _positionTracker );
+//            _commandExecutor = new CommandExecutor(_movementProcessor);
+//            _positionReporter = new PositionReporter(_positionTracker);
         }
 
 

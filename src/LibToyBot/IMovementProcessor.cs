@@ -2,7 +2,7 @@
 
 namespace LibToyBot
 {
-    internal interface IMovementProcessor
+    public interface IMovementProcessor
     {
         /// <summary>
         /// <para>

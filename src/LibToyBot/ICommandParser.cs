@@ -3,7 +3,7 @@ using LibToyBot.Outcomes;
 
 namespace LibToyBot
 {
-    internal interface ICommandExecutor
+    public interface ICommandExecutor
     {
         /// <summary>
         ///   <para>Parse and execute strings that contain commands</para>

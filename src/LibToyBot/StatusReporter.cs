@@ -1,6 +1,6 @@
 ﻿namespace LibToyBot
 {
-    internal interface IPositionReporter
+    public interface IPositionReporter
     {
         PositionReport Report();
     }
