@@ -1,19 +1,21 @@
 ﻿using LibToyBot.Reporting;
 using LibToyBot.Test.TestData;
+using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 using Xunit;
 
 namespace LibToyBot.Test
 {
-    public class PositionReporterTest
+    public class PositionReporterTest : TestBase
     {
-        private readonly PositionReporter PositionReporter;
+        private readonly IPositionReporter positionReporter;
         private readonly IPositionTracker positionTracker;
 
         public PositionReporterTest()
         {
-            positionTracker = new PositionTracker();
-            PositionReporter = new PositionReporter(positionTracker);
+            BuildServices();
+            positionTracker = serviceProvider.GetService<IPositionTracker>();
+            positionReporter = serviceProvider.GetService<IPositionReporter>();
         }
 
         [Theory]
@@ -23,7 +25,7 @@ namespace LibToyBot.Test
         {
             positionTracker.SetPosition(xCoordinate, yCoordinate);
             positionTracker.SetOrientation(orientation);
-            var report = PositionReporter.Report();
+            var report = positionReporter.Report();
             report.ToString().ShouldBe($"{xCoordinate},{yCoordinate},{orientation}");
         }
     }

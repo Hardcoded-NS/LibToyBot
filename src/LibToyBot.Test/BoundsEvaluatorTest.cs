@@ -1,14 +1,17 @@
-﻿using Shouldly;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Shouldly;
 using Xunit;
 
 namespace LibToyBot.Test
 {
-    public class BoundsEvaluatorTest
+    public class BoundsEvaluatorTest : TestBase
     {
-        private readonly BoundsEvaluator boundsEvaluator;
+        private readonly IBoundsEvaluator boundsEvaluator;
+
         public BoundsEvaluatorTest()
         {
-            boundsEvaluator = new BoundsEvaluator(new Table());
+            BuildServices();
+            boundsEvaluator = serviceProvider.GetService<IBoundsEvaluator>();
         }
 
         [Theory]
