@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using LibToyBot.Outcomes;
 
-namespace LibToyBot
+namespace LibToyBot.Movement
 {
     /// <summary>Handle all movement intents, including bounds checking and position tracking</summary>
     internal class MovementProcessor : IMovementProcessor

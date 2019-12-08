@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\LibToyBot.DependencyInjection\LibToyBot.DependencyInjection.csproj" />
     <ProjectReference Include="..\LibToyBot\LibToyBot.csproj" />
   </ItemGroup>
 

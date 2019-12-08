@@ -1,4 +1,5 @@
-﻿using LibToyBot.Outcomes;
+﻿using LibToyBot.Movement;
+using LibToyBot.Outcomes;
 using LibToyBot.Test.TestData;
 using Shouldly;
 using Xunit;

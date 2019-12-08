@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using LibToyBot.Commands;
+using LibToyBot.Movement;
+using LibToyBot.Reporting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LibToyBot.DependencyInjection
 {

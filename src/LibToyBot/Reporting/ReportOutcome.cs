@@ -1,4 +1,6 @@
-﻿namespace LibToyBot.Outcomes
+﻿using LibToyBot.Outcomes;
+
+namespace LibToyBot.Reporting
 {
     public class ReportOutcome : IOutcome //TODO: evaluate the need for this interface
     {

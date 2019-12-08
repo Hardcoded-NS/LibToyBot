@@ -1,4 +1,6 @@
-﻿namespace LibToyBot.Test
+﻿using LibToyBot.Movement;
+
+namespace LibToyBot.Test
 {
  
     public class CommandExecutorTest

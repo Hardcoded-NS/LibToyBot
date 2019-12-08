@@ -1,4 +1,5 @@
-﻿using LibToyBot.Outcomes;
+﻿using LibToyBot.Commands;
+using LibToyBot.Outcomes;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using Shouldly;

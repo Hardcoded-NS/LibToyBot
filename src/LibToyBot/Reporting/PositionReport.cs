@@ -1,4 +1,4 @@
-﻿namespace LibToyBot
+﻿namespace LibToyBot.Reporting
 {
     public class PositionReport
     {

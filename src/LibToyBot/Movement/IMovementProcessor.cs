@@ -1,6 +1,6 @@
 ﻿using LibToyBot.Outcomes;
 
-namespace LibToyBot
+namespace LibToyBot.Movement
 {
     public interface IMovementProcessor
     {
