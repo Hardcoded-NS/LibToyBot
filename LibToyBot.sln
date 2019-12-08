@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibToyBot", "src\LibToyBot\LibToyBot.csproj", "{C408152D-0B51-480B-A1BF-BF6643F72334}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibToyBot.Test", "src\LibToyBot.Test\LibToyBot.Test.csproj", "{F9DCC92F-4018-46C3-AA94-89A34703A39F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibToyBot.Test", "src\LibToyBot.Test\LibToyBot.Test.csproj", "{F9DCC92F-4018-46C3-AA94-89A34703A39F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibToyBot.DependencyInjection", "LibToyBot.DependencyInjection\LibToyBot.DependencyInjection.csproj", "{43A041AC-E891-41C1-9F5D-342B1799BB8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F9DCC92F-4018-46C3-AA94-89A34703A39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9DCC92F-4018-46C3-AA94-89A34703A39F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9DCC92F-4018-46C3-AA94-89A34703A39F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43A041AC-E891-41C1-9F5D-342B1799BB8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43A041AC-E891-41C1-9F5D-342B1799BB8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43A041AC-E891-41C1-9F5D-342B1799BB8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43A041AC-E891-41C1-9F5D-342B1799BB8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

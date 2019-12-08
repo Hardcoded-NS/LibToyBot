@@ -1,35 +1,36 @@
 ﻿using LibToyBot.Outcomes;
+using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 using Xunit;
 
 namespace LibToyBot.Test
 {
-    public class RobotTest
+    public class RobotTest : TestBase
     {
+        private readonly Robot _robot;
 
-        [Fact]
-        public void TestRobotConstructor()
+        public RobotTest()
         {
-            var robot = new Robot();
+
+
+            _robot = serviceProvider.GetService<Robot>();
         }
 
         [Fact]
         public void TestRobotPlace()
         {
-            var robot = new Robot();
-            var moveOutcome = robot.Action("PLACE X,Y,DIRECTION");
+            var moveOutcome = _robot.Action("PLACE 1,2,NORTH");
             moveOutcome.ShouldNotBeNull();
-            moveOutcome.Result.ShouldBe(OutomeStatus.Success);
+            moveOutcome.Result.ShouldBe(OutcomeStatus.Success);
         }
 
 
         [Fact]
         public void TestRobotMove()
         {
-            var robot = new Robot();
-            var moveOutcome = robot.Action("MOVE");
+            var moveOutcome = _robot.Action("MOVE");
             moveOutcome.ShouldNotBeNull();
-            moveOutcome.Result.ShouldBe(OutomeStatus.Success);
+            moveOutcome.Result.ShouldBe(OutcomeStatus.Success);
         }
     }
 

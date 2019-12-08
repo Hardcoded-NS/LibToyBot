@@ -25,10 +25,10 @@ namespace LibToyBot.Test
         }
 
         [Theory]
-        [InlineData(Orientation.North)]
-        [InlineData(Orientation.South)]
-        [InlineData(Orientation.East)]
-        [InlineData(Orientation.West)]
+        [InlineData(Orientation.NORTH)]
+        [InlineData(Orientation.SOUTH)]
+        [InlineData(Orientation.EAST)]
+        [InlineData(Orientation.WEST)]
         public void TestOrientation(Orientation newOrientation)
         {
             positionTracker.SetOrientation(newOrientation);

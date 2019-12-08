@@ -4,25 +4,25 @@ using Xunit;
 
 namespace LibToyBot.Test
 {
-    public class StatusReporterTest
+    public class PositionReporterTest
     {
-        private readonly StatusReporter statusReporter;
+        private readonly PositionReporter PositionReporter;
         private readonly IPositionTracker positionTracker;
 
-        public StatusReporterTest()
+        public PositionReporterTest()
         {
             positionTracker = new PositionTracker();
-            statusReporter = new StatusReporter(positionTracker);
+            PositionReporter = new PositionReporter(positionTracker);
         }
 
         [Theory]
         [ClassData(typeof(MovementProcessorSuccessTestData))]
         [ClassData(typeof(MovementProcessorBoundaryTestData))]
-        public void TestStatusReport(int xCoordinate, int yCoordinate, Orientation orientation)
+        public void TestPositionReport(int xCoordinate, int yCoordinate, Orientation orientation)
         {
             positionTracker.SetPosition(xCoordinate, yCoordinate);
             positionTracker.SetOrientation(orientation);
-            var report = statusReporter.Report();
+            var report = PositionReporter.Report();
             report.ToString().ShouldBe($"{xCoordinate},{yCoordinate},{orientation}");
         }
     }
