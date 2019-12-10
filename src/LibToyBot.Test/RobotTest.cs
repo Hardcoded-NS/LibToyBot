@@ -1,33 +1,73 @@
-﻿using Shouldly;
+﻿using LibToyBot.Commands;
+using LibToyBot.Outcomes;
+using Microsoft.Extensions.DependencyInjection;
+using NSubstitute;
+using Shouldly;
 using Xunit;
 
 namespace LibToyBot.Test
 {
-    public class RobotTest
+    public class RobotTest : TestBase
     {
+        private readonly Robot _robot;
+        private readonly ICommandExecutor _mockExecutor;
 
-        [Fact]
-        public void TestRobotConstructor()
+        public RobotTest()
         {
-            var robot = new Robot();
+            //setup mocks here
+            _mockExecutor = SubstituteFor<ICommandExecutor>(); 
+            BuildServices();
+            _robot = serviceProvider.GetService<Robot>(); //TODO: Maybe provide this via test fixture?
         }
 
         [Fact]
         public void TestRobotPlace()
         {
-            var robot = new Robot();
-            var moveOutcome = robot.Action("PLACE X,Y,DIRECTION");
+            const string cmd = "PLACE 1,2,NORTH";
+            var moveOutcome = _robot.Action(cmd);
             moveOutcome.ShouldNotBeNull();
-            moveOutcome.Success.ShouldBeTrue();
+            moveOutcome.Result.ShouldBe(OutcomeStatus.Success);
+            _mockExecutor.Received().ExecuteCommand(cmd);
         }
 
         [Fact]
         public void TestRobotMove()
         {
-            var robot = new Robot();
-            var moveOutcome = robot.Action("MOVE");
+            const string cmd = "MOVE";
+            var moveOutcome = _robot.Action(cmd);
             moveOutcome.ShouldNotBeNull();
-            moveOutcome.Success.ShouldBeTrue();
+            moveOutcome.Result.ShouldBe(OutcomeStatus.Success);
+            _mockExecutor.Received().ExecuteCommand(cmd);
+        }
+
+        [Fact]
+        public void TestRobotTurnLeft()
+        {
+            const string cmd = "LEFT";
+            var moveOutcome = _robot.Action(cmd);
+            moveOutcome.ShouldNotBeNull();
+            moveOutcome.Result.ShouldBe(OutcomeStatus.Success);
+            _mockExecutor.Received().ExecuteCommand(cmd);
+        }
+
+        [Fact]
+        public void TestRobotTurnRight()
+        {
+            const string cmd = "RIGHT";
+            var moveOutcome = _robot.Action(cmd);
+            moveOutcome.ShouldNotBeNull();
+            moveOutcome.Result.ShouldBe(OutcomeStatus.Success);
+            _mockExecutor.Received().ExecuteCommand(cmd);
+        }
+
+        [Fact]
+        public void TestRobotReport()
+        {
+            const string cmd = "REPORT";
+            var moveOutcome = _robot.Action(cmd);
+            moveOutcome.ShouldNotBeNull();
+            moveOutcome.Result.ShouldBe(OutcomeStatus.Success);
+            _mockExecutor.Received().ExecuteCommand(cmd);
         }
     }
 
