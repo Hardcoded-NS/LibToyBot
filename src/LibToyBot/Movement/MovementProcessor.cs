@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LibToyBot.Outcomes;
+using LibToyBot.Spatial;
 
 namespace LibToyBot.Movement
 {
@@ -9,6 +11,7 @@ namespace LibToyBot.Movement
         private readonly IBoundsEvaluator _boundsEvaluator;
         private readonly IPositionTracker _positionTracker;
         private readonly Dictionary<Orientation, (int xModifier, int yModifier)> movementMap;
+        private readonly CircularLinkedList directionList = new CircularLinkedList();
 
         public MovementProcessor(IBoundsEvaluator boundsEvaluator, IPositionTracker positionTracker)
         {
@@ -22,6 +25,11 @@ namespace LibToyBot.Movement
                 {Orientation.EAST, (1, 0)},
                 {Orientation.WEST, (-1, 0)}
             };
+
+            directionList.Add(Orientation.NORTH);
+            directionList.Add(Orientation.EAST);
+            directionList.Add(Orientation.SOUTH);
+            directionList.Add(Orientation.WEST);
         }
 
         /// <summary>
@@ -49,10 +57,27 @@ namespace LibToyBot.Movement
             return new ActionOutcome(OutcomeStatus.Success, $"The robot has moved to position {projectedX}, {projectedY}");
         }
 
-        public ActionOutcome Turn(string direction)
+        public ActionOutcome Turn(Direction direction)
         {
-            //TODO: A linked list of orientations, to keep track of the direction the robot is facing
-            return new ActionOutcome(OutcomeStatus.Success); //stub
+            var orientation = _positionTracker.GetOrientation();
+            switch(direction)
+            {
+                case Direction.LEFT:
+                    break;
+                case Direction.RIGHT:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+            }
+
+            var facing = directionList.Get(orientation);
+            var newOrientation = direction switch
+            {
+                Direction.LEFT => facing.Previous.Value,
+                Direction.RIGHT => facing.Next.Value
+            };
+            _positionTracker.SetOrientation(newOrientation);
+            return new ActionOutcome(OutcomeStatus.Success);
         }
 
         public ActionOutcome Place(in int xPosition, in int yPosition, Orientation orientation)
@@ -72,4 +97,5 @@ namespace LibToyBot.Movement
             return (x + xModifier, y + yModifier);
         }
     }
+
 }

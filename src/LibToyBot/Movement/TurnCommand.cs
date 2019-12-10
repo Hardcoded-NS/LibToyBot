@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LibToyBot.Commands;
+using LibToyBot.Spatial;
 
 namespace LibToyBot.Movement
 {
@@ -17,8 +18,9 @@ namespace LibToyBot.Movement
         public void Execute(string[] cmdTokens = default)
         {
             //single element with the direction to turn
-            var direction = cmdTokens?.FirstOrDefault();
+            var cmd = cmdTokens?.FirstOrDefault();
             //TODO: validate direction
+            var direction = Enum.Parse<Direction>(cmd);
             _movementProcessor.Turn(direction);
         }
     }

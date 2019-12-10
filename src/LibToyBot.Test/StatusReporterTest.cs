@@ -1,4 +1,5 @@
 ﻿using LibToyBot.Reporting;
+using LibToyBot.Spatial;
 using LibToyBot.Test.TestData;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;

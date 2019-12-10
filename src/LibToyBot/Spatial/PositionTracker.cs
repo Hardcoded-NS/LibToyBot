@@ -1,4 +1,4 @@
-﻿namespace LibToyBot
+﻿namespace LibToyBot.Spatial
 {
     internal class PositionTracker : IPositionTracker
     {
@@ -11,7 +11,6 @@
         {
             currentX = xCoordinate;
             currentY = yCoordinate;
-            //TODO: track history?
         }
 
 
@@ -37,5 +36,11 @@
         SOUTH,
         EAST,
         WEST
+    }
+
+    public enum Direction
+    {
+        LEFT,
+        RIGHT
     }
 }

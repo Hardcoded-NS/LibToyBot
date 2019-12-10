@@ -1,4 +1,6 @@
-﻿namespace LibToyBot
+﻿using LibToyBot.Spatial;
+
+namespace LibToyBot
 {
     public interface IPositionTracker
     {
