@@ -2,6 +2,7 @@
 using LibToyBot.Commands;
 using LibToyBot.Movement;
 using LibToyBot.Reporting;
+using LibToyBot.Spatial;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LibToyBot.DependencyInjection

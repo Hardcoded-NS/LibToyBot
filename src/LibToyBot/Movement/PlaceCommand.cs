@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LibToyBot.Commands;
+using LibToyBot.Spatial;
 
 namespace LibToyBot.Movement
 {

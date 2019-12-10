@@ -17,7 +17,7 @@ namespace LibToyBot.Test
             //setup mocks here
             _mockExecutor = SubstituteFor<ICommandExecutor>(); 
             BuildServices();
-            _robot = serviceProvider.GetService<Robot>(); //TODO: Maybe provide this via test fixture?
+            _robot = serviceProvider.GetService<Robot>();
         }
 
         [Fact]

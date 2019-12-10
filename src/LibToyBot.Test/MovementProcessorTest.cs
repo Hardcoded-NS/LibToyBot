@@ -1,5 +1,7 @@
-﻿using LibToyBot.Movement;
+﻿using System;
+using LibToyBot.Movement;
 using LibToyBot.Outcomes;
+using LibToyBot.Spatial;
 using LibToyBot.Test.TestData;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -30,14 +32,14 @@ namespace LibToyBot.Test
     */
     public class MovementProcessorTest : TestBase
     {
-        private readonly IMovementProcessor movementProcessor;
-        private readonly IPositionTracker positionTracker;
+        private readonly IMovementProcessor _movementProcessor;
+        private readonly IPositionTracker _positionTracker;
 
         public MovementProcessorTest()
         {
             BuildServices();
-            movementProcessor = serviceProvider.GetService<IMovementProcessor>();
-            positionTracker = serviceProvider.GetService<IPositionTracker>();
+            _movementProcessor = serviceProvider.GetService<IMovementProcessor>();
+            _positionTracker = serviceProvider.GetService<IPositionTracker>();
         }
 
 
@@ -45,9 +47,9 @@ namespace LibToyBot.Test
         [ClassData(typeof(MovementProcessorSuccessTestData))]
         public void TestSuccessfulMove(int xCoordinate, int yCoordinate, Orientation orientation)
         {
-            positionTracker.SetPosition(xCoordinate, yCoordinate);
-            positionTracker.SetOrientation(orientation);
-            var outcome = movementProcessor.Move();
+            _positionTracker.SetPosition(xCoordinate, yCoordinate);
+            _positionTracker.SetOrientation(orientation);
+            var outcome = _movementProcessor.Move();
             outcome.Result.ShouldBe(OutcomeStatus.Success);
         }
 
@@ -55,27 +57,38 @@ namespace LibToyBot.Test
         [ClassData(typeof(MovementProcessorBoundaryTestData))]
         public void TestFailedEdgeMove(int xCoordinate, int yCoordinate, Orientation orientation)
         {
-            positionTracker.SetPosition(xCoordinate, yCoordinate);
-            positionTracker.SetOrientation(orientation);
-            var outcome = movementProcessor.Move();
+            _positionTracker.SetPosition(xCoordinate, yCoordinate);
+            _positionTracker.SetOrientation(orientation);
+            var outcome = _movementProcessor.Move();
             outcome.Result.ShouldBe(OutcomeStatus.Fail);
         }
 
 
 
+        [Theory]
+        [InlineData(-1, 2, Orientation.NORTH)]
+        [InlineData(6, 6, Orientation.SOUTH)]
+        [InlineData(2, 7, Orientation.WEST)]
+        [InlineData(2, -6, Orientation.EAST)]
+        public void TestOutOfBoundsPlaceCommand(int xPos, int yPos, Orientation orientation)
+        {
+            var outcome = _movementProcessor.Place(xPos, yPos, orientation);
+            outcome.Result.ShouldBe(OutcomeStatus.Fail);
+        }
 
-        // TODO: These tests belong in the MovementProcessor test case
-        //        [Theory]
-        //        [InlineData("PLACE -1,2,NORTH", -1, 2, Orientation.NORTH)]
-        //        [InlineData("PLACE 6,6,SOUTH", 6, 6, Orientation.SOUTH)]
-        //        [InlineData("PLACE 2,7,SOUTH", 2, 7, Orientation.WEST)]
-        //        [InlineData("PLACE 2,-6,SOUTH", 2, -6, Orientation.EAST)]
-        ////        [InlineData("PLACE a,b,WEST", 3, 3, Orientation.WEST)]
-        //        public void TestOutOfBoundsPlaceCommand(string commandText, int xPos, int yPos, Orientation orientation)
-        //        {
-        //            _executor.ExecuteCommand(commandText);
-        //            _mockMovementProcessor.DidNotReceive().Place(xPos, yPos, orientation);
-        //        }
+        [Theory]
+        [InlineData(Orientation.NORTH, Direction.LEFT, Orientation.WEST)] 
+        [InlineData(Orientation.SOUTH, Direction.LEFT, Orientation.EAST)]
+        [InlineData(Orientation.EAST, Direction.RIGHT, Orientation.SOUTH)]
+        [InlineData(Orientation.WEST, Direction.RIGHT, Orientation.NORTH)]
+        public void TestTurnAction(Orientation startingOrientation, Direction direction, Orientation expectedOrientation)
+        {
+            _positionTracker.SetOrientation(startingOrientation);
+            var outcome = _movementProcessor.Turn(direction);
+            outcome.Result.ShouldBe(OutcomeStatus.Success);
+            var newOrientation = _positionTracker.GetOrientation();
+            newOrientation.ShouldBe(expectedOrientation);
+        }
 
     }
 }

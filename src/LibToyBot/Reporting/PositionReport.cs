@@ -1,4 +1,6 @@
-﻿namespace LibToyBot.Reporting
+﻿using LibToyBot.Spatial;
+
+namespace LibToyBot.Reporting
 {
     public class PositionReport
     {

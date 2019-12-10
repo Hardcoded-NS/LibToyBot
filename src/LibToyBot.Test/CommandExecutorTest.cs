@@ -1,6 +1,8 @@
-﻿using LibToyBot.Commands;
+﻿using System;
+using LibToyBot.Commands;
 using LibToyBot.Movement;
 using LibToyBot.Reporting;
+using LibToyBot.Spatial;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using Xunit;
@@ -48,7 +50,8 @@ namespace LibToyBot.Test
         public void TestTurnCommand(string commandText)
         {
             _executor.ExecuteCommand(commandText);
-            _mockMovementProcessor.Received().Turn(commandText);
+            var direction = Enum.Parse<Direction>(commandText);
+            _mockMovementProcessor.Received().Turn(direction);
         }
 
         [Theory]

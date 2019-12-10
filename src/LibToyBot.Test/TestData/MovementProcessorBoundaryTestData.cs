@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using LibToyBot.Spatial;
 
 namespace LibToyBot.Test.TestData
 {
