@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using LibToyBot.Commands;
+using LibToyBot.Outcomes;
 
 namespace LibToyBot.Reporting
 {
@@ -16,7 +17,9 @@ namespace LibToyBot.Reporting
 
         public void Execute(string[] cmdTokens = default)
         {
-            var postionReport = _positionReporter.Report();
+            var positionReport = _positionReporter.Report();
+            var outcome = new ReportOutcome(OutcomeStatus.Success, string.Empty, positionReport);
+            _callStack.Push(new Call(this, outcome));
         }
     }
 }

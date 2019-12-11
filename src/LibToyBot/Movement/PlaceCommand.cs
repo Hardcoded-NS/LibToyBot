@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using LibToyBot.Commands;
 using LibToyBot.Spatial;
 
@@ -7,10 +8,12 @@ namespace LibToyBot.Movement
 {
     internal class PlaceCommand : ICommand
     {
+        private readonly Stack<Call> _callStack;
         private readonly IMovementProcessor _movementProcessor;
 
         public PlaceCommand(Stack<Call> callStack, IMovementProcessor movementProcessor)
         {
+            _callStack = callStack;
             _movementProcessor = movementProcessor;
         }
 
@@ -25,9 +28,8 @@ namespace LibToyBot.Movement
             var xPosition = int.Parse(positionTokens[0]);
             var yPosition = int.Parse(positionTokens[1]);
             var orientation = Enum.Parse<Orientation>(positionTokens[2]);
-            //TODO: Check if the position is in bounds?
             var outcome = _movementProcessor.Place(xPosition, yPosition, orientation);
-            //TODO: something with outome?
+            _callStack.Push(new Call(this, outcome));
         }
     }
 }

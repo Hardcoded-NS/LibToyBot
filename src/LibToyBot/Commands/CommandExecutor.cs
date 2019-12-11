@@ -64,8 +64,8 @@ namespace LibToyBot.Commands
             };
 
             command.Execute(cmdTokens);
-            //TODO: Get outcome from call stack
-            return null;
+            var commandCall = _callStack.Peek();
+            return commandCall.Outcome;
         }
     }
 }
