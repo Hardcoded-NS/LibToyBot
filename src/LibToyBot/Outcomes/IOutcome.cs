@@ -2,7 +2,7 @@
 {
     public interface IOutcome
     {
-        OutcomeStatus Result { get; set; }
-        string Message { get; set; }
+        OutcomeStatus Result { get;  }
+        string Message { get; }
     }
 }

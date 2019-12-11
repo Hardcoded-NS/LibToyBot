@@ -8,10 +8,12 @@ namespace LibToyBot.Movement
 {
     internal class TurnCommand : ICommand
     {
+        private readonly Stack<Call> _callStack;
         private readonly IMovementProcessor _movementProcessor;
 
         public TurnCommand(Stack<Call> callStack, IMovementProcessor movementProcessor)
         {
+            _callStack = callStack;
             _movementProcessor = movementProcessor;
         }
 
@@ -21,7 +23,8 @@ namespace LibToyBot.Movement
             var cmd = cmdTokens?.FirstOrDefault();
             //TODO: validate direction
             var direction = Enum.Parse<Direction>(cmd);
-            _movementProcessor.Turn(direction);
+            var outcome = _movementProcessor.Turn(direction); 
+            _callStack.Push(new Call(this, outcome));
         }
     }
 }
