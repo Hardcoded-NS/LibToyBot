@@ -2,13 +2,14 @@
 {
     internal class PositionTracker : IPositionTracker
     {
-
         private int currentX;
         private int currentY;
         private Orientation currentOrientation;
+        public bool HasRobotBeenPlaced { get; private set; }
 
         public void SetPosition(int xCoordinate, int yCoordinate)
         {
+            HasRobotBeenPlaced = true;
             currentX = xCoordinate;
             currentY = yCoordinate;
         }

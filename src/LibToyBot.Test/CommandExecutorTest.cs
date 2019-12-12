@@ -41,6 +41,17 @@ namespace LibToyBot.Test
 
 
         [Theory]
+        [InlineData("PLACE 1,2,NORF")]
+        [InlineData("PLACE 0 0 EAST")]
+        [InlineData("PLACE A,B,SOUTH")]
+        [InlineData("PLACE")]
+        public void TestInvalidPlaceCommand(string commandText)
+        {
+            var outcome = _executor.ExecuteCommand(commandText);
+            outcome.Result.ShouldBe(OutcomeStatus.Fail);
+        }
+
+        [Theory]
         [InlineData("MOVE")]
         public void TestMoveCommand(string commandText)
         {
