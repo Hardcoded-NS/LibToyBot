@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using LibToyBot.Commands;
+using LibToyBot.Outcomes;
 using LibToyBot.Spatial;
 
 namespace LibToyBot.Movement
@@ -19,15 +19,34 @@ namespace LibToyBot.Movement
 
         public void Execute(string[] cmdTokens)
         {
-            //TODO: validate input
+            try
+            {
+                ProcessCommand(cmdTokens);
+            }
+            catch (Exception)
+            {
+                var failedOutcome = new ActionOutcome(OutcomeStatus.Fail, "The command input is invalid");
+                _callStack.Push(new Call(this, failedOutcome));
+            }
+        }
+
+        private void ProcessCommand(string[] cmdTokens)
+        {
+            // if we don't have exactly 2 command tokens, then the command input was invalid
+            if (cmdTokens.Length != 2) throw new Exception();
+
             // get the first token. If should be the PLACE command 
             // the next token will be the X,Y,DIRECTION segment
             var positionTokens = cmdTokens[1].Split(',');
-            
-            // we should now have 3 tokens of X Y DIRECTION //TODO: verify
+
+            // if we don't have exactly 3 position tokens, then the command input was invalid
+            if (positionTokens.Length != 3) throw new Exception();
+
+            // we should now have 3 tokens of X Y DIRECTION
             var xPosition = int.Parse(positionTokens[0]);
             var yPosition = int.Parse(positionTokens[1]);
             var orientation = Enum.Parse<Orientation>(positionTokens[2]);
+
             var outcome = _movementProcessor.Place(xPosition, yPosition, orientation);
             _callStack.Push(new Call(this, outcome));
         }

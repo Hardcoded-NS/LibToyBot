@@ -20,8 +20,10 @@
         /// <returns></returns>
         public bool InBounds(in int xPosition, in int yPosition)
         {
-            return xPosition <= _table.HorizontalAxis && xPosition >= 0 
-                   && yPosition <= _table.VerticalAxis && yPosition >= 0;
+            // the robot positions are zero-based indexes, while the table dimension are one-based
+            // so need to decrement the table-axis to match the robot position
+            return xPosition <= _table.HorizontalAxis-1 && xPosition >= 0 
+                   && yPosition <= _table.VerticalAxis-1 && yPosition >= 0;
         }
     }
 }

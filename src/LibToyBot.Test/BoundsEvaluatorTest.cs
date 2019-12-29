@@ -14,6 +14,7 @@ namespace LibToyBot.Test
             boundsEvaluator = serviceProvider.GetService<IBoundsEvaluator>();
         }
 
+        //TODO: Update this test to feed off the Boundary Test Data
         [Theory]
         [InlineData(0, 0)]
         [InlineData(0, 1)]
@@ -22,7 +23,6 @@ namespace LibToyBot.Test
         [InlineData(2, 2)]
         [InlineData(3, 3)]
         [InlineData(4, 4)]
-        [InlineData(5, 5)]
         public void TestInBounds(int xPosition, int yPosition)
         {
             bool result = boundsEvaluator.InBounds(xPosition, yPosition);
@@ -33,6 +33,7 @@ namespace LibToyBot.Test
         [InlineData(-1, 3)]
         [InlineData(6, 4)]
         [InlineData(3, -2)]
+        [InlineData(5, 5)]
         [InlineData(0, int.MinValue)]
         [InlineData(0, int.MaxValue)]
         public void TestOutOfBounds(int xPosition, int yPosition)

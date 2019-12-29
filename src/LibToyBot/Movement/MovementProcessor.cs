@@ -39,13 +39,19 @@ namespace LibToyBot.Movement
         /// </summary>
         public ActionOutcome Move()
         {
+            // if the robot hasn't yet been placed, then stop processing and return a failed outcome
+            if (!_positionTracker.HasRobotBeenPlaced)
+            {
+                return new ActionOutcome(OutcomeStatus.Fail, "The robot has not been placed on the table"); //TODO: fix duplicate of PositionReport functionality
+            }
+
             // get the current position
             (int xCurrent, int yCurrent) = _positionTracker.GetPosition();
 
             // get the current orientation
             var orientation = _positionTracker.GetOrientation();
             
-            // derive projected new position if the robot was allowed to move
+            // derive projected new position if the robot would be allowed to move
             (int projectedX, int projectedY) = EvaluateMove(xCurrent, yCurrent, orientation);
 
             // determine if projected position is still in bounds
@@ -88,6 +94,7 @@ namespace LibToyBot.Movement
 
             // in bounds, so perform the move
             _positionTracker.SetPosition(xPosition, yPosition);
+            _positionTracker.SetOrientation(orientation);
             return new ActionOutcome(OutcomeStatus.Success, $"The robot has been placed at {xPosition}, {yPosition}, facing {orientation}");
         }
 

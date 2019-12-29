@@ -18,7 +18,8 @@ namespace LibToyBot.Reporting
         public void Execute(string[] cmdTokens = default)
         {
             var positionReport = _positionReporter.Report();
-            var outcome = new ReportOutcome(OutcomeStatus.Success, string.Empty, positionReport);
+            //TODO: Move the outcome creation to the report generator?
+            var outcome = new ReportOutcome(OutcomeStatus.Success, positionReport.ToString(), positionReport);
             _callStack.Push(new Call(this, outcome));
         }
     }
