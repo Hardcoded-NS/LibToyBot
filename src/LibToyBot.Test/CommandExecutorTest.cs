@@ -77,6 +77,7 @@ namespace LibToyBot.Test
         [InlineData("REPORT")]
         public void TestReportCommand(string commandText)
         {
+            _mockPositionReporter.Report().Returns(info => new PositionReport());
             var outcome = _executor.ExecuteCommand(commandText);
             _mockPositionReporter.Received().Report();
             outcome.Result.ShouldBe(OutcomeStatus.Success);
