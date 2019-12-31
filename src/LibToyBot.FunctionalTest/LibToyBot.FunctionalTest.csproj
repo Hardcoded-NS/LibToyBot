@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.msbuild" Version="2.7.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="TestStack.BDDfy" Version="4.3.2" />
     <PackageReference Include="TestStack.BDDfy.Xunit" Version="1.0.0" />
     <PackageReference Include="Shouldly" Version="3.0.2" />
