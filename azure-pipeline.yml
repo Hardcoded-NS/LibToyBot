@@ -27,7 +27,7 @@ steps:
   displayName: Restore
   inputs:
     command: 'restore'
-    projects: '**/*.csproj'
+    projects: 'src/**/*.csproj'
     restoreDirectory: '$(Pipeline.Workspace)\nuget'
 
 #Build
@@ -36,7 +36,7 @@ steps:
   inputs:
     command: 'build'
     arguments: '--no-restore --configuration $(buildConfiguration)'
-    projects: '**/*.csproj'
+    projects: 'src/**/*.csproj'
 
 #Test
 - task: DotNetCoreCLI@2
@@ -45,7 +45,7 @@ steps:
     command: 'test'
     arguments: '--no-build --configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
     publishTestResults: true
-    projects: '**/*Test.csproj'
+    projects: 'src/**/*Test.csproj'
 
 - script: |
     reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines
@@ -63,7 +63,7 @@ steps:
   displayName: Pack Library
   inputs:
     command: pack    
-    packagesToPack: '**/LibToyBot.csproj'
+    packagesToPack: 'src/**/LibToyBot.csproj'
     versioningScheme: byBuildNumber    
     arguments: '--configuration $(buildConfiguration)'
 
@@ -72,7 +72,7 @@ steps:
   displayName: Pack Library (Preview)  
   inputs:
     command: pack    
-    packagesToPack: '**/LibToyBot.csproj'
+    packagesToPack: 'src/**/LibToyBot.csproj'
     versioningScheme: byEnvVar
     versionEnvVar: version     
     arguments: '--configuration $(buildConfiguration)'
@@ -83,7 +83,7 @@ steps:
   displayName: Pack Toy Box Library
   inputs:
     command: pack    
-    packagesToPack: '**/LibToyBot.ToyBox.csproj'
+    packagesToPack: 'src/**/LibToyBot.ToyBox.csproj'
     versioningScheme: byBuildNumber    
     arguments: '--configuration $(buildConfiguration)'
 
@@ -92,7 +92,7 @@ steps:
   displayName: Pack ToyBox Library (Preview)  
   inputs:
     command: pack    
-    packagesToPack: '**/LibToyBot.ToyBox.csproj'
+    packagesToPack: 'src/**/LibToyBot.ToyBox.csproj'
     versioningScheme: byEnvVar
     versionEnvVar: version     
     arguments: '--configuration $(buildConfiguration)'
@@ -103,16 +103,16 @@ steps:
   displayName: Pack DI Library
   inputs:
     command: pack    
-    packagesToPack: '**/LibToyBot.DependencyInjection.csproj'
+    packagesToPack: 'src/**/LibToyBot.DependencyInjection.csproj'
     versioningScheme: byBuildNumber    
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
-  displayName: Pack ToyBox Library (Preview)  
+  displayName: Pack DI Library (Preview)  
   inputs:
     command: pack    
-    packagesToPack: '**/LibToyBot.DependencyInjection.csproj'
+    packagesToPack: 'src/**/LibToyBot.DependencyInjection.csproj'
     versioningScheme: byEnvVar
     versionEnvVar: version     
     arguments: '--configuration $(buildConfiguration)'
