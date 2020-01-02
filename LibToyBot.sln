@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibToyBot.ToyBox", "src\LibToyBot.ToyBox\LibToyBot.ToyBox.csproj", "{7B149B05-167F-48A5-BE5B-49B5CFF86DDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{36DBB664-5C21-4BAB-890B-737F0DDE669B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36DBB664-5C21-4BAB-890B-737F0DDE669B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36DBB664-5C21-4BAB-890B-737F0DDE669B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B149B05-167F-48A5-BE5B-49B5CFF86DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B149B05-167F-48A5-BE5B-49B5CFF86DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B149B05-167F-48A5-BE5B-49B5CFF86DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B149B05-167F-48A5-BE5B-49B5CFF86DDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
