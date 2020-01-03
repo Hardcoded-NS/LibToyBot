@@ -72,6 +72,27 @@ steps:
     versionEnvVar: version     
     arguments: '--configuration $(buildConfiguration)'
 
+
+- task: DotNetCoreCLI@2
+  condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
+  displayName: Pack Toy Box Lib
+  inputs:
+    command: pack    
+    packagesToPack: '**/LibToyBot.ToyBox.csproj'
+    versioningScheme: byBuildNumber    
+    arguments: '--configuration $(buildConfiguration)'
+
+
+- task: DotNetCoreCLI@2
+  condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+  displayName: Pack ToyBox Lib(Preview)  
+  inputs:
+    command: pack    
+    packagesToPack: '**/LibToyBot.ToyBox.csproj'
+    versioningScheme: byEnvVar
+    versionEnvVar: version     
+    arguments: '--configuration $(buildConfiguration)'
+
 - task: DotNetCoreCLI@2  
   displayName: 'Push NuGet' 
   condition: and(succeeded(), or( eq(variables['Build.SourceBranchName'], 'develop'), eq(variables['Build.SourceBranchName'], 'master') ), false) #disabled
