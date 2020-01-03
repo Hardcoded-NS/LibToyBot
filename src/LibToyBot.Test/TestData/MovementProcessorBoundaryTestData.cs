@@ -6,7 +6,6 @@ namespace LibToyBot.Test.TestData
 {
     public class MovementProcessorBoundaryTestData : IEnumerable<object[]>
     {
-        //TODO: This boundaries are all off by one
         public IEnumerator<object[]> GetEnumerator()
         {
             //Left edge
@@ -15,23 +14,20 @@ namespace LibToyBot.Test.TestData
             yield return new object[] { 0, 2, Orientation.WEST };
             yield return new object[] { 0, 3, Orientation.WEST };
             yield return new object[] { 0, 4, Orientation.WEST };
-            yield return new object[] { 0, 5, Orientation.WEST };
 
             // top edge
-            yield return new object[] { 0, 5, Orientation.NORTH };
-            yield return new object[] { 1, 5, Orientation.NORTH };
-            yield return new object[] { 2, 5, Orientation.NORTH };
-            yield return new object[] { 3, 5, Orientation.NORTH };
-            yield return new object[] { 4, 5, Orientation.NORTH };
-            yield return new object[] { 5, 5, Orientation.NORTH };
+            yield return new object[] { 0, 4, Orientation.NORTH };
+            yield return new object[] { 1, 4, Orientation.NORTH };
+            yield return new object[] { 2, 4, Orientation.NORTH };
+            yield return new object[] { 3, 4, Orientation.NORTH };
+            yield return new object[] { 4, 4, Orientation.NORTH };
 
             //right edge
-            yield return new object[] { 5, 0, Orientation.EAST };
-            yield return new object[] { 5, 1, Orientation.EAST };
-            yield return new object[] { 5, 2, Orientation.EAST };
-            yield return new object[] { 5, 3, Orientation.EAST };
-            yield return new object[] { 5, 4, Orientation.EAST };
-            yield return new object[] { 5, 5, Orientation.EAST };
+            yield return new object[] { 4, 0, Orientation.EAST };
+            yield return new object[] { 4, 1, Orientation.EAST };
+            yield return new object[] { 4, 2, Orientation.EAST };
+            yield return new object[] { 4, 3, Orientation.EAST };
+            yield return new object[] { 4, 4, Orientation.EAST };
 
             //bottom edge
             yield return new object[] { 0, 0, Orientation.SOUTH };
@@ -39,7 +35,6 @@ namespace LibToyBot.Test.TestData
             yield return new object[] { 2, 0, Orientation.SOUTH };
             yield return new object[] { 3, 0, Orientation.SOUTH };
             yield return new object[] { 4, 0, Orientation.SOUTH };
-            yield return new object[] { 5, 0, Orientation.SOUTH };
         }
 
         IEnumerator IEnumerable.GetEnumerator()
