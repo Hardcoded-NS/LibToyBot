@@ -1,17 +1,17 @@
-﻿namespace LibToyBot
+﻿namespace LibToyBot.Spatial
 {
     internal class PositionTracker : IPositionTracker
     {
-
         private int currentX;
         private int currentY;
         private Orientation currentOrientation;
+        public bool HasRobotBeenPlaced { get; private set; }
 
         public void SetPosition(int xCoordinate, int yCoordinate)
         {
+            HasRobotBeenPlaced = true;
             currentX = xCoordinate;
             currentY = yCoordinate;
-            //TODO: track history?
         }
 
 
@@ -37,5 +37,11 @@
         SOUTH,
         EAST,
         WEST
+    }
+
+    public enum Direction
+    {
+        LEFT,
+        RIGHT
     }
 }

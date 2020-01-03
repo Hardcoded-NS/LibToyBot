@@ -1,4 +1,5 @@
 ﻿using LibToyBot.Outcomes;
+using LibToyBot.Spatial;
 
 namespace LibToyBot.Movement
 {
@@ -10,7 +11,7 @@ namespace LibToyBot.Movement
         /// </para>
         /// </summary>
         ActionOutcome Move();
-        ActionOutcome Turn(string direction);
+        ActionOutcome Turn(Direction direction);
 
         ActionOutcome Place(in int xPosition, in int yPosition, Orientation orientation);
     }

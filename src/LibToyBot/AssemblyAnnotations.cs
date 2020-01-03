@@ -2,3 +2,4 @@
 
 [assembly: InternalsVisibleTo("LibToyBot.Test")]
 [assembly: InternalsVisibleTo("LibToyBot.DependencyInjection")]
+[assembly: InternalsVisibleTo("LibToyBot.ToyBox")]

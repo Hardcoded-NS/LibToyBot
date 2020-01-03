@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LibToyBot.Commands;
+using LibToyBot.Outcomes;
 
 namespace LibToyBot.Reporting
 {
@@ -16,7 +18,12 @@ namespace LibToyBot.Reporting
 
         public void Execute(string[] cmdTokens = default)
         {
-            var postionReport = _positionReporter.Report();
+            var positionReport = _positionReporter.Report();
+            Console.WriteLine(positionReport);
+
+            //TODO: Move the outcome creation to the report generator?
+            var outcome = new ReportOutcome(OutcomeStatus.Success, positionReport.ToString(), positionReport);
+            _callStack.Push(new Call(this, outcome));
         }
     }
 }

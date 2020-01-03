@@ -44,28 +44,39 @@ namespace LibToyBot.Commands
         /// </summary>
         public IOutcome ExecuteCommand(string commandText)
         {
-            // TODO: sanitise command input
-
-            // tokenize the command string on whitespace
-            var cmdTokens = commandText.Split(' ');
-
-            // switch over the first token
-            var firstToken = cmdTokens.FirstOrDefault();
-            Enum.TryParse<RobotCommand>(firstToken, out var commandEnum);
-
-            ICommand command = commandEnum switch
+            try
             {
-                RobotCommand.PLACE => _placeCommand,
-                RobotCommand.MOVE => _moveCommand,
-                RobotCommand.LEFT => _turnCommand,
-                RobotCommand.RIGHT => _turnCommand,
-                RobotCommand.REPORT => _reportCommand,
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                var sanitizedCommandText = Sanitize(commandText);
+                // tokenize the command string on whitespace
+                var cmdTokens = sanitizedCommandText.Split(' ');
 
-            command.Execute(cmdTokens);
-            //TODO: Get outcome from call stack
-            return null;
+                // switch over the first token
+                var firstToken = cmdTokens.FirstOrDefault();
+                Enum.TryParse<RobotCommand>(firstToken, out var commandEnum);
+
+                ICommand command = commandEnum switch
+                {
+                    RobotCommand.PLACE => _placeCommand,
+                    RobotCommand.MOVE => _moveCommand,
+                    RobotCommand.LEFT => _turnCommand,
+                    RobotCommand.RIGHT => _turnCommand,
+                    RobotCommand.REPORT => _reportCommand,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+
+                command.Execute(cmdTokens);
+                var commandCall = _callStack.Peek();
+                return commandCall.Outcome;
+            }
+            catch (Exception)
+            {
+                return new ActionOutcome(OutcomeStatus.Fail, "The command is invalid");
+            }
+        }
+
+        private static string Sanitize(string commandText)
+        {
+            return commandText.ToUpperInvariant();
         }
     }
 }

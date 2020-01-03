@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using LibToyBot.Spatial;
+using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 using Xunit;
 

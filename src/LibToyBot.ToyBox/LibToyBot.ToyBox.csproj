@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>Aaron White</Authors>
+    <Company></Company>
+    <Product />
+    <Description>A toy box for obtaining robot instances for projects without dependency injection support.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LibToyBot\LibToyBot.csproj" />
+  </ItemGroup>
+
+</Project>

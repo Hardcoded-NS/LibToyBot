@@ -2,6 +2,7 @@
 using LibToyBot.Commands;
 using LibToyBot.Movement;
 using LibToyBot.Reporting;
+using LibToyBot.Spatial;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LibToyBot.DependencyInjection
@@ -10,7 +11,6 @@ namespace LibToyBot.DependencyInjection
     {
         public static ServiceCollection AddRobot(this ServiceCollection serviceCollection)
         {
-            //TODO: Verify these internal implementation classes
             serviceCollection
                 .AddSingleton<Robot>()
                 .AddScoped<ICommandExecutor, CommandExecutor>()
@@ -24,21 +24,6 @@ namespace LibToyBot.DependencyInjection
                 .AddSingleton<TurnCommand>()
                 .AddSingleton<ReportCommand>()
                 .AddSingleton<Table>();
-
-
-
-
-//            serviceCollection.AddSingleton<IDictionary<RobotCommand, ICommand>>(provider =>
-//            {
-//                IDictionary<RobotCommand, ICommand> commandMap = new Dictionary<RobotCommand, ICommand>(5)
-//                {
-//                    {RobotCommand.PLACE, new PlaceCommand()}
-//                };
-//
-//                return commandMap;
-//            });
-
-
 
             return serviceCollection;
         }

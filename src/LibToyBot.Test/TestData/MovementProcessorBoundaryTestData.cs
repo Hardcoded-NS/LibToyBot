@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using LibToyBot.Spatial;
 
 namespace LibToyBot.Test.TestData
 {
     public class MovementProcessorBoundaryTestData : IEnumerable<object[]>
     {
+        //TODO: This boundaries are all off by one
         public IEnumerator<object[]> GetEnumerator()
         {
             //Left edge

@@ -1,60 +1,137 @@
 
-name: $(Version.Major).$(Version.Minor)$(rev:.r)
+name: $(version.Major).$(version.Minor)$(rev:.r)
 
 trigger:
 - master
 - develop
 
 variables:
-  Version: $(Build.BuildNumber)-preview
-  BuildConfiguration: Release
+  version: $(Build.BuildNumber)-preview
+  buildConfiguration: Release
 
 pool:
   name: Hosted Windows 2019 with VS2019
 
 steps:
 
+# Bild pre-requisites
+- task: DotNetCoreCLI@2
+  displayName: 'Install ReportGenerator'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: 'install --global dotnet-reportgenerator-globaltool'
+
+#Restore
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
     command: 'restore'
-    projects: '**/*.csproj'
+    projects: 'src/**/*.csproj'
     restoreDirectory: '$(Pipeline.Workspace)\nuget'
 
-
+#Build
 - task: DotNetCoreCLI@2
-  displayName: Test
+  displayName: 'Build - $(buildConfiguration)'
   inputs:
-    command: test
-    projects: 'src/LibToyBot.Test/LibToyBot.Test.csproj'
-    arguments: '--configuration $(BuildConfiguration)'
-  enabled: true
+    command: 'build'
+    arguments: '--no-restore --configuration $(buildConfiguration)'
+    projects: 'src/**/*.csproj'
 
+#Test
+- task: DotNetCoreCLI@2
+  displayName: 'Run tests - $(buildConfiguration)'
+  inputs:
+    command: 'test'
+    arguments: '--no-build --configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    publishTestResults: true
+    projects: 'src/**/*Test.csproj'
+
+- script: |
+    reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines
+  displayName: 'Create code coverage report'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage report'
+  inputs:
+    codeCoverageTool: 'cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'  
+
+#Pack Main Library
 - task: DotNetCoreCLI@2
   condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
-  displayName: Pack 
+  displayName: Pack Library
   inputs:
     command: pack    
-    packagesToPack: '**/LibToyBot.csproj'
+    packagesToPack: 'src/**/LibToyBot.csproj'
     versioningScheme: byBuildNumber    
-    arguments: '--configuration $(BuildConfiguration)'
+    arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
-  displayName: Pack (Preview)  
+  displayName: Pack Library (Preview)  
   inputs:
     command: pack    
-    packagesToPack: '**/LibToyBot.csproj'
+    packagesToPack: 'src/**/LibToyBot.csproj'
     versioningScheme: byEnvVar
-    versionEnvVar: Version     
-    arguments: '--configuration $(BuildConfiguration)'
+    versionEnvVar: version     
+    arguments: '--configuration $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2  
-  displayName: 'Push NuGet' 
-  condition: and(succeeded(), or( eq(variables['Build.SourceBranchName'], 'develop'), eq(variables['Build.SourceBranchName'], 'master') ), false) #disabled
+#Pack Toy box Library
+- task: DotNetCoreCLI@2
+  condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
+  displayName: Pack Toy Box Library
   inputs:
-    command: push    
-    publishVstsFeed: '/9549f135-9aeb-42aa-9fe5-b09a7b7c41ea'
+    command: pack    
+    packagesToPack: 'src/**/LibToyBot.ToyBox.csproj'
+    versioningScheme: byBuildNumber    
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+  displayName: Pack ToyBox Library (Preview)  
+  inputs:
+    command: pack    
+    packagesToPack: 'src/**/LibToyBot.ToyBox.csproj'
+    versioningScheme: byEnvVar
+    versionEnvVar: version     
+    arguments: '--configuration $(buildConfiguration)'
+
+#Pack DI Library
+- task: DotNetCoreCLI@2
+  condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
+  displayName: Pack DI Library
+  inputs:
+    command: pack    
+    packagesToPack: 'src/**/LibToyBot.DependencyInjection.csproj'
+    versioningScheme: byBuildNumber    
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+  displayName: Pack DI Library (Preview)  
+  inputs:
+    command: pack    
+    packagesToPack: 'src/**/LibToyBot.DependencyInjection.csproj'
+    versioningScheme: byEnvVar
+    versionEnvVar: version     
+    arguments: '--configuration $(buildConfiguration)'
+
+#Publish
+- task: DotNetCoreCLI@2  
+  displayName: 'Push NuGet packages' 
+  condition: and(
+      succeeded(), 
+      or( 
+        eq(variables['Build.SourceBranchName'], 'develop'), 
+        eq(variables['Build.SourceBranchName'], 'master') 
+      )
+    )
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '96844f69-5cd8-49ae-a3c7-2320a96fc969/22785776-25d8-473d-b4b0-855810cdaad5'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
