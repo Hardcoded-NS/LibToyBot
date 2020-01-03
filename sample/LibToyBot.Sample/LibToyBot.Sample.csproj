@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LibToyBot.DependencyInjection" Version="1.0.43-preview" />
-    <PackageReference Include="LibToyBot.ToyBox" Version="1.0.43-preview" />
-    <PackageReference Include="LibToyBot" Version="1.0.43-preview" />
+    <PackageReference Include="LibToyBot.DependencyInjection" Version="1.0.50" />
+    <PackageReference Include="LibToyBot.ToyBox" Version="1.0.50" />
+    <PackageReference Include="LibToyBot" Version="1.0.50" />
   </ItemGroup>
 
 

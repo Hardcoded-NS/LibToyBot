@@ -42,7 +42,7 @@ namespace LibToyBot.Movement
             // if the robot hasn't yet been placed, then stop processing and return a failed outcome
             if (!_positionTracker.HasRobotBeenPlaced)
             {
-                return new ActionOutcome(OutcomeStatus.Fail, "The robot has not been placed on the table"); //TODO: fix duplicate of PositionReport functionality
+                return new ActionOutcome(OutcomeStatus.Fail, "The robot has not been placed on the table");
             }
 
             // get the current position
