@@ -14,7 +14,6 @@ namespace LibToyBot.Test
             boundsEvaluator = serviceProvider.GetService<IBoundsEvaluator>();
         }
 
-        //TODO: Update this test to feed off the Boundary Test Data
         [Theory]
         [InlineData(0, 0)]
         [InlineData(0, 1)]

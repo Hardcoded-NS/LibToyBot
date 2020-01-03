@@ -1,6 +1,6 @@
 
 # Toy Robot Library
-[![Build Status](https://dev.azure.com/argent78/LibToyBot/_apis/build/status/Argent78.LibToyBot?branchName=master)](https://dev.azure.com/argent78/LibToyBot/_build/latest?definitionId=1&branchName=master) ![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/argent78/LibToyBot/1)
+[![Build Status](https://dev.azure.com/argent78/LibToyBot/_apis/build/status/Argent78.LibToyBot?branchName=master)](https://dev.azure.com/argent78/LibToyBot/_build/latest?definitionId=1&branchName=master) [![LibToyBot package in ToyBotFeed feed in Azure Artifacts](https://feeds.dev.azure.com/argent78/96844f69-5cd8-49ae-a3c7-2320a96fc969/_apis/public/Packaging/Feeds/22785776-25d8-473d-b4b0-855810cdaad5/Packages/5e977aee-68b6-4f29-ba97-6f60e360f6f5/Badge)](https://dev.azure.com/argent78/LibToyBot/_packaging?_a=package&feed=22785776-25d8-473d-b4b0-855810cdaad5&package=5e977aee-68b6-4f29-ba97-6f60e360f6f5&preferRelease=true) ![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/argent78/LibToyBot/1)
 
 This library allows for a simulation of a toy robot moving on a 5 x 5 square table top. 
 
@@ -36,6 +36,12 @@ The containing codebase is presented as an *example* of producing a nuget librar
 ### Prerequisites
 
 Requires Visual Studio installed with .NET Standard 2.1 and a Git client (i.e. SourceTree)
+
+
+### Design overview
+A basic component diagram was used as a guide for developing this library. 
+
+![Component diagram](https://github.com/Argent78/LibToyBot/blob/master/doc/Component%20Diagram.png?raw=true)
 
 
 ### Building the library
@@ -133,7 +139,7 @@ Then implement the `GetRobot()` method:
     }
 ```
 
-See `src\LibToyBot.Sample\LibToyBot.Sample.NetCore` for sample code.
+See `sample\LibToyBot.Sample` for sample code.
 
 ### Alternatives to IoC
 If your solution does not make use of an IoC container, then install the `LibToyBot.ToyBox` library:
@@ -157,7 +163,7 @@ There are two test projects for this library. `LibToyBot.Test` is a suite of uni
 
 Functional tests are contained in the `LibToyBot.FunctionalTest` project. These tests do not use any mocking, and instead offer an end-to-end test of all components as if they were used from a real application.
 
-These functional tests are documented using [Bddfy](https://github.com/TestStack/TestStack.BDDfy), with `stories` derived verbatim from the [requirements document](doc/Toy Robot Simulator.docx).
+These functional tests are documented using [Bddfy](https://github.com/TestStack/TestStack.BDDfy), with `stories` derived verbatim from the [requirements document](https://github.com/Argent78/LibToyBot/blob/master/doc/Toy%20Robot%20Simulator.docx).
 
 
 
@@ -190,7 +196,7 @@ Functional tests offer additional output when run as follows:
 > dotnet test --no-build --logger trx --results-directory _temp 
 ```
 
-This will produce output with a `trx` results file in the `_temp` directory. This output can also be viewed via the Azure DevOps Pipeline.
+This will produce output with a `trx` results file in the `_temp` directory. This output can also be viewed via the [Azure DevOps pipeline](https://dev.azure.com/argent78/LibToyBot/_build?definitionId=1&_a=summary).
 
 
 ### Code Coverage

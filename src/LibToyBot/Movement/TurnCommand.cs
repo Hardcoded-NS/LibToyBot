@@ -21,7 +21,6 @@ namespace LibToyBot.Movement
         {
             //single element with the direction to turn
             var cmd = cmdTokens?.FirstOrDefault();
-            //TODO: validate direction
             var direction = Enum.Parse<Direction>(cmd);
             var outcome = _movementProcessor.Turn(direction); 
             _callStack.Push(new Call(this, outcome));

@@ -2,7 +2,7 @@
 
 namespace LibToyBot.Reporting
 {
-    public class ReportOutcome : IOutcome //TODO: evaluate the need for this interface
+    public class ReportOutcome : IOutcome
     {
         public ReportOutcome(OutcomeStatus result, string message, PositionReport positionReport)
         {
